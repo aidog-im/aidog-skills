@@ -1,0 +1,7 @@
+# Byte-compiled caches are never shipped: Python constant-folds the fragment
+# assembly above at compile time, so a .pyc would contain exactly the
+# contiguous literals this repository must not carry (and the leak scan reads
+# untracked files).
+__pycache__/
+*.pyc
+*.pyo

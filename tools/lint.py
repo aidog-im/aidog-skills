@@ -51,9 +51,16 @@ MAX_SKILL_BYTES = 100_000
 MAX_DESC_WORDS = 60          # a one-liner, not an essay
 
 # Own constants, assembled from fragments so this file never carries the
-# contiguous literal and therefore never trips its own scan.
+# contiguous literal and therefore never trips its own scan. This file is part
+# of a PUBLIC repository — a detector that spells out what it detects would be
+# the leak itself (observed: the codename alternative below was a literal).
 BRAND = "her" "mes"
-INTERNAL = re.compile(r"C总|javis|msgchain|imjavis", re.IGNORECASE)
+_OWNER = "C" + "\u603b"
+_LEGACY = "jav" + "is"
+_ASSOC = "msg" + "chain"
+# The former product-repo alias needs no alternative of its own: it contains
+# _LEGACY as a substring and the scan is case-insensitive.
+INTERNAL = re.compile("|".join((_OWNER, _LEGACY, _ASSOC)), re.IGNORECASE)
 
 LEAK_PATTERNS: list[tuple[str, re.Pattern]] = [
     ("machine-path-mnt", re.compile(r"/mnt/")),
